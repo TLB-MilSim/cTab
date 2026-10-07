@@ -1,0 +1,269 @@
+/*
+ * cTab IRL pages (_Layout) in the TLB "Warm Instrument" theme.
+ * Tokens come from ~/tlb/tlb-theme.css (synced from the TLB hub); this file
+ * re-skins the Bootstrap 4 components the views use and adds cTab's own layout.
+ */
+
+/* ---- Base ---------------------------------------------------------------- */
+body {
+    font-family: var(--font-body);
+    font-size: .95rem;
+    color: var(--text-body);
+    background-color: var(--canvas);
+    background-image: var(--page-glow);
+    display: flex;
+    flex-direction: column;
+}
+body > .container { flex: 1 0 auto; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); font-weight: 600; color: var(--text); letter-spacing: .01em; }
+h2 { font-size: 1.45rem; }
+a { color: var(--amber); }
+a:hover { color: var(--amber-bright); text-decoration: none; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+hr { border-top-color: var(--line); }
+.text-muted, small { color: var(--muted) !important; }
+code { color: var(--amber); font-family: var(--mono); font-size: .85em; }
+kbd {
+    padding: .1rem .4rem;
+    color: var(--text);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line-strong);
+    border-bottom-width: 2px;
+    border-radius: var(--radius-xs);
+    font-family: var(--mono);
+    font-size: .8em;
+    box-shadow: none;
+}
+dt { color: var(--text); font-weight: 600; }
+dd { color: var(--muted); }
+.container { max-width: 1120px; padding-left: 2rem; padding-right: 2rem; }
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .55rem;
+    color: var(--amber);
+    font-family: var(--mono);
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+/* ---- cTab header (below the suite bar) ----------------------------------- */
+.ctab-header {
+    background: var(--surface-header-grad);
+    border-bottom: 1px solid var(--line);
+}
+.ctab-header-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    min-height: 4.2rem;
+}
+.ctab-brand {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.ctab-brand:hover { color: var(--text); }
+.ctab-brand small { color: var(--amber); font-size: .8em; font-weight: 600; }
+.ctab-brand-icon {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    color: var(--amber);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-md);
+    font-size: .95rem;
+}
+.ctab-subnav { display: flex; align-items: center; gap: .25rem; flex: 1; min-width: 0; }
+.ctab-subnav a {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .5rem .75rem;
+    color: var(--muted);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 120ms ease, background-color 120ms ease;
+}
+.ctab-subnav a:hover { color: var(--text); background: var(--surface-hover); }
+.ctab-subnav a i { color: var(--subtle); font-size: .85em; }
+.ctab-user { display: flex; align-items: center; gap: .75rem; margin-left: auto; }
+.ctab-user-name { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+
+/* ---- Page sections ------------------------------------------------------- */
+main { padding-top: 2.5rem; }
+
+.ctab-hero { margin-bottom: 2rem; }
+.ctab-hero h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); line-height: .95; text-transform: uppercase; margin-bottom: .6rem; }
+.ctab-hosted { margin: 0; font-size: .9rem; }
+.ctab-hosted a { color: var(--muted); }
+.ctab-hosted a:hover { color: var(--amber); }
+
+.ctab-card {
+    position: relative;
+    padding: 1.6rem;
+    background: var(--surface-raised-grad);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-raised);
+}
+.ctab-card h2 { margin-bottom: .9rem; }
+.ctab-card p:last-child, .ctab-card ol:last-child { margin-bottom: 0; }
+.ctab-card ol { padding-left: 1.2rem; color: var(--text-body); line-height: 1.6; }
+.ctab-card ol li { margin-bottom: .4rem; padding-left: .25rem; }
+.ctab-card ol li::marker { color: var(--amber); font-family: var(--mono); font-size: .85em; }
+.ctab-card--accent { border-left: 3px solid var(--amber); }
+
+.ctab-resume { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 1rem; }
+.ctab-resume h2 { font-size: 1.2rem; margin-bottom: .3rem; }
+.ctab-resume p { margin: 0; color: var(--muted); }
+
+.ctab-step { display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 1rem; }
+.ctab-step h2 { margin-bottom: .35rem; }
+.ctab-step p { color: var(--muted); }
+.ctab-step-num {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 2.6rem;
+    height: 2.6rem;
+    color: var(--amber);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-md);
+    font-family: var(--mono);
+    font-size: .85rem;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+.ctab-step-num--sm { width: 1.6rem; height: 1.6rem; font-size: .62rem; border-radius: var(--radius-sm); }
+
+.ctab-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.ctab-options .ctab-card { display: flex; flex-direction: column; }
+.ctab-card-action { margin-top: auto; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+.ctab-qr-shot {
+    display: block;
+    max-width: 100%;
+    margin: 1.2rem auto 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+
+/* ---- Bootstrap components ----------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    min-height: 2.5rem;
+    padding: .55rem .95rem;
+    font-family: var(--font-display);
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    border-radius: var(--radius-md);
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+.btn-sm { min-height: 2rem; padding: .3rem .7rem; font-size: .72rem; }
+.btn-block { display: flex; }
+.btn:focus, .btn.focus { box-shadow: var(--ring-focus-soft); }
+.btn-success, .btn-primary,
+.btn-success:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled):active {
+    color: var(--accent-fg);
+    background: var(--amber);
+    border-color: var(--amber);
+    box-shadow: var(--shadow-accent);
+}
+.btn-success:hover, .btn-primary:hover, .btn-success:focus, .btn-primary:focus {
+    color: var(--accent-fg);
+    background: var(--amber-bright);
+    border-color: var(--amber-bright);
+}
+.btn-secondary,
+.btn-secondary:not(:disabled):not(.disabled):active {
+    color: var(--text);
+    background: var(--surface-raised);
+    border-color: var(--line-strong);
+}
+.btn-secondary:hover, .btn-secondary:focus { color: var(--text); background: var(--surface-hover); border-color: var(--line-strong); }
+
+.form-control, .custom-select {
+    height: auto;
+    min-height: 2.5rem;
+    padding: .6rem .75rem;
+    color: var(--text);
+    background: var(--surface-sunken);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+}
+.form-control::placeholder { color: var(--subtle); }
+.form-control:hover { border-color: var(--line-strong); }
+.form-control:focus { color: var(--text); background: var(--surface-sunken); border-color: var(--amber); box-shadow: var(--ring-focus-soft); }
+.input-group-text { color: var(--muted); background: var(--surface-raised); border-color: var(--line); border-radius: var(--radius-md); }
+.form-check-input { accent-color: var(--amber); }
+.form-check-label, label { color: var(--muted); font-size: .85rem; }
+
+.alert { border-radius: var(--radius-lg); border-width: 1px; }
+.alert-danger { color: var(--red); background: var(--red-soft); border-color: var(--red-line); }
+.alert-secondary { color: var(--text-body); background: var(--surface-raised); border-color: var(--line); }
+
+.table { color: var(--text-body); }
+.table td, .table th { border-top-color: var(--line); }
+
+.modal-content { color: var(--text-body); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-xl); box-shadow: var(--shadow-overlay); }
+.modal-header, .modal-footer { border-color: var(--line); }
+
+/* ---- Footer -------------------------------------------------------------- */
+.footer {
+    flex: none;
+    margin-top: 3rem;
+    padding: 1.2rem 0 1.6rem;
+    border-top: 1px solid var(--line);
+    color: var(--subtle);
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .03em;
+}
+.footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem; }
+.footer a { color: var(--muted); }
+.footer a:hover { color: var(--amber); }
+
+/* Privacy page "Fork me on GitHub" ribbon: keep the credit, match the theme,
+   and sit below the suite bar. The ribbon's own stylesheet loads after this
+   one, hence the extra `body` for specificity. */
+body .github-fork-ribbon { top: var(--tlb-bar-h); }
+body .github-fork-ribbon:before { background-color: var(--amber); }
+body .github-fork-ribbon:after { color: var(--accent-fg); text-shadow: none; }
+
+/* ---- Small screens ------------------------------------------------------- */
+@media (max-width: 900px) {
+    .ctab-options { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+    .container { padding-left: 1rem; padding-right: 1rem; }
+    .ctab-header-inner { flex-wrap: wrap; gap: .25rem 1rem; padding-top: .7rem; padding-bottom: .5rem; }
+    .ctab-subnav { order: 3; flex-basis: 100%; overflow-x: auto; margin: 0 -.75rem; }
+    .ctab-user-name { display: none; }
+    main { padding-top: 1.75rem; }
+    .ctab-card { padding: 1.2rem; }
+    .ctab-resume { flex-direction: column; align-items: stretch; }
+}

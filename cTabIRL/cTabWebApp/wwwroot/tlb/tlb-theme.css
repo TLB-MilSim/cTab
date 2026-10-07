@@ -1,0 +1,124 @@
+/*
+ * TLB MilSim "Warm Instrument" theme — shared design tokens for the TLB suite
+ * (hub, cTab, OCAP). Values mirror the Tac Map's styles.css; keep them in sync.
+ * Tac Map defines these itself and does not load this file.
+ *
+ * Fonts are loaded by each page (Google Fonts link), not from here.
+ */
+:root {
+  --font-display: "Barlow Semi Condensed", "Barlow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+
+  --canvas: #100F0D;
+  --surface: #161412;
+  --surface-raised: #1D1B18;
+  --surface-hover: #221F1B;
+  --surface-sunken: #0A0908;
+  --surface-raised-grad: linear-gradient(#16151200, #1614124D), #161412;
+  --surface-header-grad: linear-gradient(#1A1815, #171512);
+  --page-glow: radial-gradient(120% 80% at 12% 0%, #16140F 0%, #100F0D 58%);
+  --line: #2E2A24;
+  --line-strong: #403A32;
+  --line-subtle: #221F1B;
+  --text: #EDEAE4;
+  --text-body: #CFC9BE;
+  --muted: #ACA596;
+  --subtle: #8B847A;
+  --sand: #CFC9BE;
+  --amber: #F2A03D;
+  --amber-bright: #FFB559;
+  --accent-fg: #17120A;
+  --accent-soft: #F2A03D14;
+  --accent-line: #F2A03D3D;
+  --accent-glow: #F2A03D26;
+  --green: #7FA36B;
+  --green-soft: #7FA36B14;
+  --green-line: #7FA36B3D;
+  --warning: #E0B341;
+  --red: #D8695C;
+  --red-soft: #C8564A14;
+  --red-line: #C8564A40;
+  --info: #8FB8C9;
+  --shadow-raised: 0 1px 2px #00000047;
+  --shadow-overlay: 0 18px 44px #000000B3;
+  --shadow-accent: 0 2px 12px var(--accent-glow);
+  --ring-focus-soft: 0 0 0 3px #F2A03D1F;
+  --sidebar-bg: #0E0D0B;
+  --overlay-bg: #0A0908E6;
+  --backdrop: #0A0908CC;
+  --hatch-a: #141210;
+  --hatch-b: #100F0D;
+  --scrollbar-thumb: #3A352E;
+  --scrollbar-thumb-hover: #504A40;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-pill: 999px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --canvas: #F7F4EF;
+  --surface: #FFFFFF;
+  --surface-raised: #F5F1EA;
+  --surface-hover: #EFEBE3;
+  --surface-sunken: #EFEBE3;
+  --surface-raised-grad: linear-gradient(#FFFFFF, #FCFAF6);
+  --surface-header-grad: linear-gradient(#FCFAF6, #F5F1EA);
+  --page-glow: radial-gradient(120% 80% at 12% 0%, #FFFDF8 0%, #F7F4EF 58%);
+  --line: #DFD9CE;
+  --line-strong: #C4BCAE;
+  --line-subtle: #EAE5DC;
+  --text: #1A1815;
+  --text-body: #33302A;
+  --muted: #524D46;
+  --subtle: #6E685F;
+  --sand: #33302A;
+  --amber: #A85C08;
+  --amber-bright: #8C4C05;
+  --accent-fg: #FFFFFF;
+  --accent-soft: #A85C0812;
+  --accent-line: #A85C083D;
+  --accent-glow: #A85C081F;
+  --green: #3F6B2E;
+  --green-soft: #3F6B2E14;
+  --green-line: #3F6B2E3D;
+  --warning: #8A6410;
+  --red: #A8352A;
+  --red-soft: #A8352A12;
+  --red-line: #A8352A40;
+  --info: #2A6480;
+  --shadow-raised: 0 1px 2px #1A18150F;
+  --shadow-overlay: 0 18px 44px #1A181524;
+  --ring-focus-soft: 0 0 0 3px #A85C081F;
+  --sidebar-bg: #FCFAF6;
+  --overlay-bg: #FFFFFFE6;
+  --backdrop: #1A181566;
+  --hatch-a: #EDE8E0;
+  --hatch-b: #F4F0E9;
+  --scrollbar-thumb: #C8C1B6;
+  --scrollbar-thumb-hover: #A8A196;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { min-width: 320px; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text-body);
+  background: var(--canvas);
+  background-image: var(--page-glow);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis: none;
+}
+* { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) transparent; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }

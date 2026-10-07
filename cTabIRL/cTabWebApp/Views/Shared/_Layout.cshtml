@@ -4,63 +4,57 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#100F0D" />
     @if (ViewData["Description"] != null)
     {
         <meta name="description" content="@ViewData["Description"]" />
     }
     <title>
-        @ViewData["Title"] - SIT 1erGTD
+        @ViewData["Title"] - cTab
         @if (!string.IsNullOrEmpty(Communauty.Name))
         {
             @:- @Communauty.Name
         }
     </title>
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/slate/bootstrap.min.css" rel="stylesheet" integrity="sha384-G9YbB4o4U6WS4wCthMOpAeweY4gQJyyx0P3nZbEBHyz+AtNoeasfRChmek1C2iqV" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
     <link rel="icon" type="image/png" sizes="128x128" href="/img/favicon-128x128.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+    <link rel="stylesheet" href="~/tlb/tlb-theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/tlb/tlb-suite-bar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SIT 1erGTD</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index"><i class="fas fa-sign-in-alt"></i> @SharedResource.Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Session" asp-action="Replay"><i class="fas fa-play-circle"></i> @SharedResource.Replay</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://steamcommunity.com/workshop/filedetails/?id=2262009445" target="_blank"><i class="fas fa-download"></i> @SharedResource.Download</a>
-                        </li>
-                        @if (!string.IsNullOrEmpty(Communauty.Home))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Communauty.Home">@string.Format(SharedResource.GoBackTo, Communauty.Name)</a>
-                            </li>
-                        }
-                    </ul>
-                    @if (User?.Identity?.IsAuthenticated ?? false)
-                    {
-                        <span class="mr-sm-2" style="font-size:80%">@User.Identity.Name</span>
-                        <a asp-controller="Home" asp-action="SignOut" class="btn btn-sm btn-secondary" title="@User.Identity.Name">
-                            @SharedResource.Disconnect
-                        </a>
-                    }
+    <script src="~/tlb/tlb-suite-bar.js" asp-append-version="true" data-app="ctab"></script>
+
+    <header class="ctab-header">
+        <div class="container ctab-header-inner">
+            <a class="ctab-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <span class="ctab-brand-icon" aria-hidden="true"><i class="fas fa-tablet-alt"></i></span>
+                <span>cTab <small>IRL</small></span>
+            </a>
+            <nav class="ctab-subnav" aria-label="cTab">
+                <a asp-controller="Home" asp-action="Index"><i class="fas fa-sign-in-alt"></i> @SharedResource.Home</a>
+                <a asp-controller="Session" asp-action="Replay"><i class="fas fa-play-circle"></i> @SharedResource.Replay</a>
+                <a href="https://steamcommunity.com/workshop/filedetails/?id=2262009445" target="_blank" rel="noopener"><i class="fas fa-download"></i> @SharedResource.Download</a>
+            </nav>
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="ctab-user">
+                    <span class="ctab-user-name"><i class="fab fa-steam"></i> @User.Identity.Name</span>
+                    <a asp-controller="Home" asp-action="SignOut" class="btn btn-sm btn-secondary" title="@User.Identity.Name">
+                        @SharedResource.Disconnect
+                    </a>
                 </div>
-            </div>
-        </nav>
+            }
+        </div>
     </header>
+
     <div class="title">
         <div class="container">
             @RenderSection("Title", required: false)
@@ -73,13 +67,22 @@
         </main>
     </div>
 
-    <footer class="footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2020-2023 - <a asp-controller="Home" asp-action="Privacy">@SharedResource.Privacy</a>
-            @if (!string.IsNullOrEmpty(Communauty.Contact))
-            {
-            @:- <a href="@Communauty.Contact">@SharedResource.Contact</a>
-            }
+            <span>
+                @if (!string.IsNullOrEmpty(Communauty.Name))
+                {
+                    <text>@Communauty.Name ·</text>
+                }
+                cTab IRL by <a href="https://github.com/jetelain/cTab" target="_blank" rel="noopener">jetelain</a>
+            </span>
+            <span>
+                <a asp-controller="Home" asp-action="Privacy">@SharedResource.Privacy</a>
+                @if (!string.IsNullOrEmpty(Communauty.Contact))
+                {
+                    @:· <a href="@Communauty.Contact">@SharedResource.Contact</a>
+                }
+            </span>
         </div>
     </footer>
 
