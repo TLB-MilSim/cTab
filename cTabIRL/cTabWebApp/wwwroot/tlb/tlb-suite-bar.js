@@ -15,6 +15,8 @@
  *   data-app          which app this page belongs to: hub | ctab | tacmap | ocap
  *   data-theme-owner  "app" when the app applies its own theme on load (Tac Map);
  *                     otherwise the bar applies the saved theme itself.
+ *   data-theme-toggle "off" hides the dark/light button, for an app that has
+ *                     no light theme.
  *
  * Events: dispatches `tlb:themechange` on window (detail: "dark" | "light")
  * when the user toggles the theme from the bar.
@@ -25,6 +27,7 @@
   var script = document.currentScript;
   var currentApp = (script && script.dataset.app) || '';
   var appOwnsTheme = script && script.dataset.themeOwner === 'app';
+  var showThemeToggle = !(script && script.dataset.themeToggle === 'off');
 
   // Live sites run under *.tlbmilsim.com; anything else (localhost, LAN IP) is local.
   var isLive = /(^|\.)tlbmilsim\.com$/i.test(location.hostname);
@@ -106,7 +109,7 @@
     '</nav>' +
     '<div class="tlb-sb-tools">' +
       '<a class="tlb-sb-site" href="' + SITE.href + '">' + SITE.label + svg(ICON_EXT, 12) + '</a>' +
-      '<button type="button" class="tlb-sb-icon" data-tlb-theme></button>' +
+      (showThemeToggle ? '<button type="button" class="tlb-sb-icon" data-tlb-theme></button>' : '') +
       '<button type="button" class="tlb-sb-icon tlb-sb-menu" aria-label="Open navigation" aria-controls="tlb-sb-nav" aria-expanded="false">' + svg(ICON_MENU, 18) + '</button>' +
     '</div>';
 
@@ -114,6 +117,7 @@
   var menuButton = bar.querySelector('.tlb-sb-menu');
 
   function renderThemeButton() {
+    if (!themeButton) return;
     var theme = currentTheme();
     var next = theme === 'dark' ? 'light' : 'dark';
     themeButton.innerHTML = svg(theme === 'dark' ? ICON_MOON : ICON_SUN, 17);
@@ -121,7 +125,7 @@
     themeButton.title = 'Switch to ' + next + ' theme';
   }
 
-  themeButton.addEventListener('click', function () {
+  if (themeButton) themeButton.addEventListener('click', function () {
     var next = currentTheme() === 'dark' ? 'light' : 'dark';
     applyTheme(next);
     saveTheme(next);
