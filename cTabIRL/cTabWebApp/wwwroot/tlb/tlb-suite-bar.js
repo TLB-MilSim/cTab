@@ -36,7 +36,7 @@
     { id: 'hub', label: 'Hub', live: 'https://hub.tlbmilsim.com/', local: 'http://localhost:8000/' },
     { id: 'ctab', label: 'cTab', live: 'https://ctab.tlbmilsim.com/', local: 'http://localhost:5010/' },
     { id: 'tacmap', label: 'Tac Map', live: 'https://tacmap.tlbmilsim.com/', local: 'http://localhost:8080/' },
-    { id: 'ocap', label: 'OCAP', live: 'https://ocap.tlbmilsim.com/', local: 'https://ocap.tlbmilsim.com/' }
+    { id: 'ocap', label: 'OCAP', live: 'https://ocap.tlbmilsim.com/', local: 'http://localhost:5000/' }
   ];
   var SITE = { label: 'tlbmilsim.com', href: 'https://tlbmilsim.com/' };
 
