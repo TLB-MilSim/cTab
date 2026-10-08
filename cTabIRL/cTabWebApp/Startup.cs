@@ -7,6 +7,7 @@ using cTabWebApp.Services.Images;
 using cTabWebApp.Services.Recording;
 using cTabWebApp.TacMaps;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.DataProtection;
@@ -17,6 +18,8 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 
 namespace cTabWebApp
 {
@@ -56,8 +59,36 @@ namespace cTabWebApp
             services.AddSingleton<PublicUriService>();
 
 
+            var tlbAuth = Configuration.GetSection("TlbAuth").Get<TlbAuthSettings>();
             var steamKey = Configuration.GetValue<string>("SteamKey");
-            if (!string.IsNullOrEmpty(steamKey))
+            if (tlbAuth != null && tlbAuth.IsEnabled)
+            {
+                // Shared TLB sign-in: the auth service's session cookie (ES256 JWT) replaces the Steam sign-in.
+                services.AddSingleton(tlbAuth);
+                services.AddAuthentication(TlbAuthSettings.Scheme)
+                    .AddJwtBearer(TlbAuthSettings.Scheme, o =>
+                    {
+                        o.MetadataAddress = tlbAuth.MetadataUrl;
+                        o.RequireHttpsMetadata = false; // internal Docker address; tokens are still signature-checked
+                        o.MapInboundClaims = false;
+                        o.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidIssuer = tlbAuth.Issuer,
+                            ValidAudience = TlbAuthSettings.Audience,
+                            ValidAlgorithms = new[] { SecurityAlgorithms.EcdsaSha256 },
+                            NameClaimType = "name",
+                        };
+                        o.Events = new JwtBearerEvents
+                        {
+                            OnMessageReceived = ctx =>
+                            {
+                                ctx.Token = ctx.Request.Cookies[TlbAuthSettings.SessionCookie];
+                                return Task.CompletedTask;
+                            },
+                        };
+                    });
+            }
+            else if (!string.IsNullOrEmpty(steamKey))
             {
                 services.AddAuthentication(options =>
                 {
@@ -109,7 +140,8 @@ namespace cTabWebApp
             app.UseRouting();
             app.UseArma3TacMapStaticFiles();
 
-            if (!string.IsNullOrEmpty(Configuration.GetValue<string>("SteamKey")))
+            var tlbAuth = Configuration.GetSection("TlbAuth").Get<TlbAuthSettings>();
+            if ((tlbAuth != null && tlbAuth.IsEnabled) || !string.IsNullOrEmpty(Configuration.GetValue<string>("SteamKey")))
             {
                 app.UseAuthentication();
             }

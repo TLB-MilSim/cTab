@@ -41,7 +41,8 @@
                 <a asp-controller="Session" asp-action="Replay"><i class="fas fa-play-circle"></i> @SharedResource.Replay</a>
                 <a href="https://steamcommunity.com/workshop/filedetails/?id=2262009445" target="_blank" rel="noopener"><i class="fas fa-download"></i> @SharedResource.Download</a>
             </nav>
-            @if (User?.Identity?.IsAuthenticated ?? false)
+            @* With the shared TLB sign-in, the top bar shows the account and Sign out. *@
+            @if ((User?.Identity?.IsAuthenticated ?? false) && Context.RequestServices.GetService(typeof(cTabWebApp.TlbAuthSettings)) == null)
             {
                 <div class="ctab-user">
                     <span class="ctab-user-name"><i class="fab fa-steam"></i> @User.Identity.Name</span>

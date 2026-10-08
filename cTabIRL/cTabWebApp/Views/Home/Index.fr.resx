@@ -186,4 +186,22 @@
   <data name="See your in-game cTab live on a phone, tablet or second monitor, outside of Arma 3." xml:space="preserve">
     <value>Affichez votre cTab en jeu, en direct, sur un téléphone, une tablette ou un second écran, en dehors d'Arma 3.</value>
   </data>
+  <data name="Connect with your TLB account and cTab Key" xml:space="preserve">
+    <value>Se connecter avec votre compte TLB et la clé cTab</value>
+  </data>
+  <data name="Sign in with Discord. The first time, link your Steam account so cTab can find your in-game session." xml:space="preserve">
+    <value>Se connecter avec Discord. La première fois, liez votre compte Steam pour que cTab retrouve votre session en jeu.</value>
+  </data>
+  <data name="Signed in as {0}." xml:space="preserve">
+    <value>Connecté en tant que {0}.</value>
+  </data>
+  <data name="Link your Steam account once, so cTab can find your in-game session." xml:space="preserve">
+    <value>Liez votre compte Steam une seule fois, pour que cTab retrouve votre session en jeu.</value>
+  </data>
+  <data name="Link Steam account" xml:space="preserve">
+    <value>Lier le compte Steam</value>
+  </data>
+  <data name="Sign in with Discord" xml:space="preserve">
+    <value>Se connecter avec Discord</value>
+  </data>
 </root>

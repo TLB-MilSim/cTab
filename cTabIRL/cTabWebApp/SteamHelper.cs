@@ -12,6 +12,12 @@ namespace cTabWebApp
         {
             if (user?.Identity?.IsAuthenticated ?? false)
             {
+                // Shared TLB sign-in: the Steam account linked to the user's Discord.
+                var linked = user.FindFirst(TlbAuthSettings.SteamIdClaim);
+                if (linked != null && !string.IsNullOrEmpty(linked.Value))
+                {
+                    return linked.Value;
+                }
                 var nameClaim = user.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
                 if (nameClaim != null && nameClaim.Value.StartsWith("https://steamcommunity.com/openid/id/"))
                 {

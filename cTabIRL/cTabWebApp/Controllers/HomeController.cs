@@ -73,6 +73,7 @@ namespace cTabWebApp.Controllers
             var vm = new HomeVM();
             vm.PublicUri = _publicUri.GetPublicAdress(Request);
             vm.Providers = await GetExternalProvidersAsync();
+            vm.TlbAuth = HttpContext.RequestServices.GetService<TlbAuthSettings>();
             return vm;
         }
 
@@ -166,6 +167,11 @@ namespace cTabWebApp.Controllers
         [HttpGet, HttpPost]
         public new IActionResult SignOut()
         {
+            var tlbAuth = HttpContext.RequestServices.GetService<TlbAuthSettings>();
+            if (tlbAuth != null)
+            {
+                return Redirect(tlbAuth.Url("logout", _publicUri.GetPublicAdress(Request)));
+            }
             return SignOut(new AuthenticationProperties { RedirectUri = "/" },
                 CookieAuthenticationDefaults.AuthenticationScheme);
         }

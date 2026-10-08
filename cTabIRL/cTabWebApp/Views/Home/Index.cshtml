@@ -44,54 +44,92 @@
 
 <div class="ctab-options">
     <section class="ctab-card">
-        <p class="eyebrow"><span class="ctab-step-num ctab-step-num--sm" aria-hidden="true">02</span> Steam</p>
-        <h2>@Localizer["Connect with Steam and cTab Key"]</h2>
-        @if (Model.Providers.Length > 0)
+        @{
+            // Key entry, shown once the player's Steam ID is known (shared TLB sign-in or Steam sign-in).
+            Func<object, object> keyForm = @<text>
+            <form method="post" asp-action="EnterKey">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-key"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="key" name="key" placeholder="@Localizer["Key"]" inputmode="numeric" autocomplete="off" />
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit">@Localizer["Validate"]</button>
+                    </div>
+                </div>
+            </form>
+            </text>;
+        }
+        @if (Model.TlbAuth != null)
         {
+            var signedIn = User?.Identity?.IsAuthenticated ?? false;
+            var hasSteam = !string.IsNullOrEmpty(SteamHelper.GetSteamId(User));
+            <p class="eyebrow"><span class="ctab-step-num ctab-step-num--sm" aria-hidden="true">02</span> Discord</p>
+            <h2>@Localizer["Connect with your TLB account and cTab Key"]</h2>
             <ol>
                 <li>@Localizer["Open {0} in a browser on your phone, tablet or second monitor.", Model.PublicUri]</li>
-                <li>@Localizer["Signin with steam."]</li>
+                <li>@Localizer["Sign in with Discord. The first time, link your Steam account so cTab can find your in-game session."]</li>
                 <li>@Localizer["In-game, once the message 'cTab connected to {0}.' appears, open map with key <kbd>m</kbd> (qwerty keyboard).", Model.PublicUri]</li>
                 <li>@Localizer["Go into 'cTab IRL', 'Connect a mobile device', locate the key displayed (6 digits)."]</li>
                 <li>@Localizer["Type here the key and validate."]</li>
             </ol>
-
             <div class="ctab-card-action">
-                @if (User?.Identity?.IsAuthenticated ?? false)
+                @if (signedIn && hasSteam)
                 {
-                    <form method="post" asp-action="EnterKey">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text"><i class="fas fa-key"></i></div>
-                            </div>
-                            <input type="text" class="form-control" id="key" name="key" placeholder="@Localizer["Key"]" inputmode="numeric" autocomplete="off" />
-                            <div class="input-group-append">
-                                <button class="btn btn-success" type="submit">@Localizer["Validate"]</button>
-                            </div>
-                        </div>
-                    </form>
+                    @keyForm(null)
+                }
+                else if (signedIn)
+                {
+                    <p class="ctab-signed-in">@Localizer["Signed in as {0}.", User.Identity.Name] @Localizer["Link your Steam account once, so cTab can find your in-game session."]</p>
+                    <a class="btn btn-success btn-block" href="@Model.TlbAuth.Url("link/steam", Model.PublicUri)"><i class="fab fa-steam"></i> @Localizer["Link Steam account"]</a>
                 }
                 else
                 {
-                    @foreach (var scheme in Model.Providers.OrderBy(p => p.DisplayName))
-                    {
-                        <form method="post" asp-action="SignIn">
-                            <input type="hidden" name="Provider" value="@scheme.Name" />
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" value="true" id="isPersistent" name="isPersistent">
-                                <label class="form-check-label" for="isPersistent">
-                                    @Localizer["Rember me"]
-                                </label>
-                            </div>
-                            <button class="btn btn-success btn-block" type="submit"><i class="fab fa-steam"></i> @Localizer["Connect with {0}", scheme.DisplayName]</button>
-                        </form>
-                    }
+                    <a class="btn btn-discord btn-block" href="@Model.TlbAuth.Url("login", Model.PublicUri)"><i class="fab fa-discord"></i> @Localizer["Sign in with Discord"]</a>
                 }
             </div>
         }
         else
         {
-            <p class="text-muted">@Localizer["Unavailable"]</p>
+            <p class="eyebrow"><span class="ctab-step-num ctab-step-num--sm" aria-hidden="true">02</span> Steam</p>
+            <h2>@Localizer["Connect with Steam and cTab Key"]</h2>
+            @if (Model.Providers.Length > 0)
+            {
+                <ol>
+                    <li>@Localizer["Open {0} in a browser on your phone, tablet or second monitor.", Model.PublicUri]</li>
+                    <li>@Localizer["Signin with steam."]</li>
+                    <li>@Localizer["In-game, once the message 'cTab connected to {0}.' appears, open map with key <kbd>m</kbd> (qwerty keyboard).", Model.PublicUri]</li>
+                    <li>@Localizer["Go into 'cTab IRL', 'Connect a mobile device', locate the key displayed (6 digits)."]</li>
+                    <li>@Localizer["Type here the key and validate."]</li>
+                </ol>
+
+                <div class="ctab-card-action">
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        @keyForm(null)
+                    }
+                    else
+                    {
+                        @foreach (var scheme in Model.Providers.OrderBy(p => p.DisplayName))
+                        {
+                            <form method="post" asp-action="SignIn">
+                                <input type="hidden" name="Provider" value="@scheme.Name" />
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" value="true" id="isPersistent" name="isPersistent">
+                                    <label class="form-check-label" for="isPersistent">
+                                        @Localizer["Rember me"]
+                                    </label>
+                                </div>
+                                <button class="btn btn-success btn-block" type="submit"><i class="fab fa-steam"></i> @Localizer["Connect with {0}", scheme.DisplayName]</button>
+                            </form>
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">@Localizer["Unavailable"]</p>
+            }
         }
     </section>
 

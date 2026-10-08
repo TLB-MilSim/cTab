@@ -12,5 +12,8 @@ namespace cTabWebApp.Models
         public string PublicUri { get; internal set; }
         public AuthenticationScheme[] Providers { get; internal set; }
         public PlayerState CurrentState { get; internal set; }
+
+        /// <summary>Shared TLB sign-in settings, or null when cTab uses its own Steam sign-in.</summary>
+        public TlbAuthSettings TlbAuth { get; internal set; }
     }
 }
