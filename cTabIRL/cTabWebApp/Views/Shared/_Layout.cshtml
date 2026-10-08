@@ -9,21 +9,19 @@
     {
         <meta name="description" content="@ViewData["Description"]" />
     }
-    <title>
-        @ViewData["Title"] - cTab
-        @if (!string.IsNullOrEmpty(Communauty.Name))
-        {
-            @:- @Communauty.Name
-        }
-    </title>
+    @{
+        // Tab titles across the TLB suite: "TLB MilSim · <App> · <Page>" (no page part on the app's main page).
+        var pageTitle = ViewData["Title"] as string;
+        var titleSuffix = string.IsNullOrEmpty(pageTitle) || pageTitle == SharedResource.Home ? "" : " · " + pageTitle;
+        var unitName = string.IsNullOrEmpty(Communauty.Name) ? "TLB MilSim" : Communauty.Name;
+    }
+    <title>@unitName · cTab@(titleSuffix)</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
-    <link rel="icon" type="image/png" sizes="128x128" href="/img/favicon-128x128.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
+    <link rel="icon" type="image/png" href="~/tlb/tlb-favicon.png" asp-append-version="true" />
     <link rel="stylesheet" href="~/tlb/tlb-theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/tlb/tlb-suite-bar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
