@@ -255,8 +255,8 @@
   <data name="Switch to EFIS" xml:space="preserve">
     <value>Switch to EFIS</value>
   </data>
-  <data name="Tactical map will be displayed on your mobile device and in Arma. Changes made on {0} will be applied in real-time." xml:space="preserve">
-    <value>Tactical map will be displayed on your mobile device and in Arma. Changes made on {0} will be applied in real-time.</value>
+  <data name="Tactical map will be displayed on this device and in Arma. Changes made on {0} will be applied in real-time." xml:space="preserve">
+    <value>Tactical map will be displayed on this device and in Arma. Changes made on {0} will be applied in real-time.</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>To</value>

@@ -8,7 +8,8 @@
 
 <section class="ctab-hero">
     <p class="eyebrow">@(string.IsNullOrEmpty(Communauty.Name) ? "cTab IRL" : Communauty.Name + " · cTab IRL")</p>
-    <h1>@Localizer["cTab on mobile device"]</h1>
+    <h1>@Localizer["cTab outside the game"]</h1>
+    <p class="ctab-lead">@Localizer["See your in-game cTab live on a phone, tablet or second monitor, outside of Arma 3."]</p>
     @if (!string.IsNullOrEmpty(Communauty.Name))
     {
         <p class="ctab-hosted">
@@ -48,10 +49,10 @@
         @if (Model.Providers.Length > 0)
         {
             <ol>
-                <li>@Localizer["Open {0} with the mobile browser.", Model.PublicUri]</li>
+                <li>@Localizer["Open {0} in a browser on your phone, tablet or second monitor.", Model.PublicUri]</li>
                 <li>@Localizer["Signin with steam."]</li>
                 <li>@Localizer["In-game, once the message 'cTab connected to {0}.' appears, open map with key <kbd>m</kbd> (qwerty keyboard).", Model.PublicUri]</li>
-                <li>@Localizer["Go into 'cTab IRL', 'Connect to mobile device', locate the key displayed (6 digits)."]</li>
+                <li>@Localizer["Go into 'cTab IRL', 'Connect a mobile device', locate the key displayed (6 digits)."]</li>
                 <li>@Localizer["Type here the key and validate."]</li>
             </ol>
 
@@ -99,7 +100,7 @@
         <h2>@Localizer["Connect with QR Code (easier)"]</h2>
         <ol>
             <li>@Localizer["In-game, once the message 'cTab connected to {0}.' appears, open map with key <kbd>m</kbd> (qwerty keyboard).", Model.PublicUri]</li>
-            <li>@Localizer["Go into 'cTab IRL', 'Connect a mobile device', then scan the code with your mobile device."]</li>
+            <li>@Localizer["Go into 'cTab IRL', 'Connect a mobile device', then scan the code with your phone or tablet camera."]</li>
         </ol>
         <img class="ctab-qr-shot" src="~/img/qrcode.png" alt="" />
     </section>

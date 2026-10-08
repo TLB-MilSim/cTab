@@ -135,16 +135,16 @@
   <data name="Connect with {0}" xml:space="preserve">
     <value>Se connecter avec {0}</value>
   </data>
-  <data name="cTab on mobile device" xml:space="preserve">
-    <value>cTab sur appareil mobile</value>
+  <data name="cTab outside the game" xml:space="preserve">
+    <value>cTab hors du jeu</value>
   </data>
   <data name="Download the mod from the &lt;a href=&quot;{0}&quot;&gt;Steam Workshop&lt;/a&gt;, or from &lt;a href=&quot;{1}&quot;&gt;GitHub&lt;/a&gt;." xml:space="preserve">
     <value>Télécharger le mod depuis le &lt;a href="{0}"&gt;Workshop Steam&lt;/a&gt;, ou depuis &lt;a href="{1}"&gt;GitHub&lt;/a&gt;.</value>
   </data>
-  <data name="Go into 'cTab IRL', 'Connect a mobile device', then scan the code with your mobile device." xml:space="preserve">
-    <value>Aller dans 'cTab IRL', 'Connecter un appareil mobile', puis scanner le code avec votre appareil mobile.</value>
+  <data name="Go into 'cTab IRL', 'Connect a mobile device', then scan the code with your phone or tablet camera." xml:space="preserve">
+    <value>Aller dans 'cTab IRL', 'Connecter un appareil mobile', puis scanner le code avec l'appareil photo de votre téléphone ou tablette.</value>
   </data>
-  <data name="Go into 'cTab IRL', 'Connect to mobile device', locate the key displayed (6 digits)." xml:space="preserve">
+  <data name="Go into 'cTab IRL', 'Connect a mobile device', locate the key displayed (6 digits)." xml:space="preserve">
     <value>Aller dans 'cTab IRL', 'Connecter un appareil mobile', puis identifier la clé affichée (6 chiffres).</value>
   </data>
   <data name="Hosted by {0}" xml:space="preserve">
@@ -159,8 +159,8 @@
   <data name="Key" xml:space="preserve">
     <value>Clé</value>
   </data>
-  <data name="Open {0} with the mobile browser." xml:space="preserve">
-    <value>Ouvrir {0} avec le navigateur mobile.</value>
+  <data name="Open {0} in a browser on your phone, tablet or second monitor." xml:space="preserve">
+    <value>Ouvrir {0} dans un navigateur sur votre téléphone, tablette ou second écran.</value>
   </data>
   <data name="Rember me" xml:space="preserve">
     <value>Se rappeler de moi</value>
@@ -182,5 +182,8 @@
   </data>
   <data name="You can host the cTab IRL Server on your computer or on your communauty server. It needs some technical skills, follow instructions on the &lt;a href=&quot;{0}&quot;&gt;GitHub documentation page&lt;/a&gt;." xml:space="preserve">
     <value>Vous pouvez héberger le serveur cTab IRL sur votre ordinateur, ou sur votre serveur communautaire. Cela nécessite quelques compétences techniques, suivre les instructions sur la &lt;a href="{0}"&gt;page de documentation GitHub&lt;/a&gt;.</value>
+  </data>
+  <data name="See your in-game cTab live on a phone, tablet or second monitor, outside of Arma 3." xml:space="preserve">
+    <value>Affichez votre cTab en jeu, en direct, sur un téléphone, une tablette ou un second écran, en dehors d'Arma 3.</value>
   </data>
 </root>
