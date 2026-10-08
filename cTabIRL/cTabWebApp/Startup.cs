@@ -85,6 +85,15 @@ namespace cTabWebApp
                                 ctx.Token = ctx.Request.Cookies[TlbAuthSettings.SessionCookie];
                                 return Task.CompletedTask;
                             },
+                            // cTab is for TLB members: ignore sessions without the "member" permission.
+                            OnTokenValidated = ctx =>
+                            {
+                                if (!ctx.Principal.HasClaim("perms", TlbAuthSettings.MemberPermission))
+                                {
+                                    ctx.Fail("Not a TLB member");
+                                }
+                                return Task.CompletedTask;
+                            },
                         };
                     });
             }

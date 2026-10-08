@@ -12,6 +12,7 @@ namespace cTabWebApp
         public const string SessionCookie = "tlb_session";
         public const string Audience = "tlb-suite";
         public const string SteamIdClaim = "steam_id";
+        public const string MemberPermission = "member";
 
         /// <summary>Public address of the auth service, e.g. https://auth.tlbmilsim.com/ (also the token issuer).</summary>
         public string PublicUrl { get; set; }
