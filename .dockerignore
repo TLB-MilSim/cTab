@@ -1,0 +1,12 @@
+**/.git
+**/.vs
+**/bin
+**/obj
+**/node_modules
+**/*.user
+**/appsettings.Development.json
+**/appsettings.Production.json
+@cTab
+cTabIRL/@cTabIRL
+docs
+serverkey
