@@ -6,9 +6,8 @@
 # Configuration: mount an appsettings.Production.json at /app/appsettings.Production.json
 # (SteamKey, Communauty, ...). Storage paths default to the volumes below.
 
-# SDK 9 builds the net8.0 app; SDK 8's older NuGet resolver rejects the AngleSharp
-# versions required by AspNet.Security.OpenId (>= 1.0.6) and HtmlSanitizer (= 0.17.1).
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+# Base images are pinned by digest (Dependabot's docker ecosystem keeps them current).
+FROM mcr.microsoft.com/dotnet/sdk:10.0@sha256:0d99ebf1ccad15037b5c98c9fe8979d6b8dbac23812feae2277a0b277b5c5ffa AS build
 WORKDIR /src
 # Restore first so package downloads are cached between code changes.
 COPY Arma3TacMap/Arma3TacMapLibrary/Arma3TacMapLibrary.csproj Arma3TacMap/Arma3TacMapLibrary/
@@ -18,7 +17,7 @@ COPY Arma3TacMap/ Arma3TacMap/
 COPY cTabIRL/cTabWebApp/ cTabIRL/cTabWebApp/
 RUN dotnet publish cTabIRL/cTabWebApp/cTabWebApp.csproj -c ReleaseCloud -o /out --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0@sha256:d5633778c754e89a386882eddf8dbee6942447a8a4b8267c19cf1e1158d0b0ac
 WORKDIR /app
 COPY --from=build /out ./
 # Writable locations for the non-root `app` user: shared photos, session recordings,

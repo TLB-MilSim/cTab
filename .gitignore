@@ -5,6 +5,7 @@ obj
 *.pbo
 *.user
 appsettings.Development.json
+appsettings.Production.json
 /cTabIRL/packages
 *.dll
 *.pdb

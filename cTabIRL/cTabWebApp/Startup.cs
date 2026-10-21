@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Linq;
+using System.Security.Claims;
 using Arma3TacMapLibrary;
 using cTabWebApp.Models;
 using cTabWebApp.Services;
@@ -63,13 +65,17 @@ namespace cTabWebApp
             var steamKey = Configuration.GetValue<string>("SteamKey");
             if (tlbAuth != null && tlbAuth.IsEnabled)
             {
-                // Shared TLB sign-in: the auth service's session cookie (ES256 JWT) replaces the Steam sign-in.
+                // Shared TLB sign-in: the Login Service's session cookie (ES256 JWT) replaces the Steam sign-in.
+                tlbAuth.Validate();
                 services.AddSingleton(tlbAuth);
+                services.AddMemoryCache();
+                services.AddSingleton<TlbVerifyService>();
                 services.AddAuthentication(TlbAuthSettings.Scheme)
                     .AddJwtBearer(TlbAuthSettings.Scheme, o =>
                     {
                         o.MetadataAddress = tlbAuth.MetadataUrl;
-                        o.RequireHttpsMetadata = false; // internal Docker address; tokens are still signature-checked
+                        // Plain http only for internal addresses (e.g. http://auth:8080 in Docker).
+                        o.RequireHttpsMetadata = !TlbAuthSettings.IsInternal(tlbAuth.MetadataUrl);
                         o.MapInboundClaims = false;
                         o.TokenValidationParameters = new TokenValidationParameters
                         {
@@ -77,6 +83,7 @@ namespace cTabWebApp
                             ValidAudience = TlbAuthSettings.Audience,
                             ValidAlgorithms = new[] { SecurityAlgorithms.EcdsaSha256 },
                             NameClaimType = "name",
+                            ClockSkew = TimeSpan.FromSeconds(30),
                         };
                         o.Events = new JwtBearerEvents
                         {
@@ -85,14 +92,32 @@ namespace cTabWebApp
                                 ctx.Token = ctx.Request.Cookies[TlbAuthSettings.SessionCookie];
                                 return Task.CompletedTask;
                             },
-                            // cTab is for TLB members: ignore sessions without the "member" permission.
-                            OnTokenValidated = ctx =>
+                            // cTab is for TLB members: the session must have the "member" permission, both in
+                            // the cookie and live at the Login Service (not signed out, blocked or role removed).
+                            OnTokenValidated = async ctx =>
                             {
                                 if (!ctx.Principal.HasClaim("perms", TlbAuthSettings.MemberPermission))
                                 {
                                     ctx.Fail("Not a TLB member");
+                                    return;
                                 }
-                                return Task.CompletedTask;
+                                var verify = ctx.HttpContext.RequestServices.GetRequiredService<TlbVerifyService>();
+                                var live = await verify.VerifyAsync(ctx.Request.Cookies[TlbAuthSettings.SessionCookie], ctx.HttpContext.RequestAborted);
+                                if (live == null || live.DiscordId != ctx.Principal.FindFirst("sub")?.Value || !live.Has(TlbAuthSettings.MemberPermission))
+                                {
+                                    ctx.Fail("TLB session no longer valid");
+                                    return;
+                                }
+                                // Use the Steam account linked right now (it may have changed since the session was issued).
+                                var identity = (ClaimsIdentity)ctx.Principal.Identity;
+                                foreach (var claim in identity.FindAll(TlbAuthSettings.SteamIdClaim).ToList())
+                                {
+                                    identity.RemoveClaim(claim);
+                                }
+                                if (!string.IsNullOrEmpty(live.SteamId))
+                                {
+                                    identity.AddClaim(new Claim(TlbAuthSettings.SteamIdClaim, live.SteamId));
+                                }
                             },
                         };
                     });
