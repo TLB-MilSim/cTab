@@ -1,0 +1,27 @@
+# TLB fork: weekly update PRs for the web app's packages, the pinned base images
+# (Dockerfile) and the pinned actions (workflows). PRs target the default branch, tlb.
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directories:
+      - "/cTabIRL/cTabWebApp"
+      - "/cTabIRL/cTabWebAppTest"
+    schedule:
+      interval: "weekly"
+    groups:
+      nuget-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
